@@ -1,13 +1,12 @@
 package main
 
 import (
-	"io"
 	"os"
 )
 
 func main() {
 	// Open terminal
-	fd, openerr := os.Open("/dev/tty0")
+	fd, openerr := os.Create("/dev/tty0")
 	if openerr != nil {
 		panic(openerr)
 	}
@@ -19,4 +18,7 @@ func main() {
 	}()
 	bel := []byte{7}
 	_, writeerr := fd.Write(bel)
+	if writeerr != nil {
+		panic(writeerr)
+	}
 }

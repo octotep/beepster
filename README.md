@@ -10,7 +10,7 @@ speakers. My first (and hopefully only attempt) at this will be in golang.
 - [ioctl implementation in go](https://github.com/edsrzf/fineline/blob/master/ioctl.go)
 
 # TODO
-- [ ] Play a beep with go
+- [X] Play a beep with go
 - [ ] Play different pitched beeps
 - [ ] Create a Conductor server
 - [ ] Create a Player client
