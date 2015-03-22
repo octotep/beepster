@@ -24,10 +24,11 @@ func main() {
 			panic(err)
 		}
 	}()
-	// Set the pitch
-	_, _, _ = syscall.Syscall(syscall.SYS_IOCTL, fd.Fd(), KIOCSOUND, CLOCK_TICK_RATE/440)
-	bel := []byte{7}
-	_, _ = fd.Write(bel)
-	time.Sleep(2 * time.Second)
+	// Set the pitch and beep
+	_, _, _ = syscall.Syscall(syscall.SYS_IOCTL, fd.Fd(), uintptr(KIOCSOUND), uintptr(CLOCK_TICK_RATE/440))
+	time.Sleep(1 * time.Second)
+	_, _, _ = syscall.Syscall(syscall.SYS_IOCTL, fd.Fd(), uintptr(KIOCSOUND), uintptr(CLOCK_TICK_RATE/880))
+	time.Sleep(1 * time.Second)
+	// Stop beeping
 	_, _, _ = syscall.Syscall(syscall.SYS_IOCTL, fd.Fd(), KIOCSOUND, 0)
 }
