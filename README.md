@@ -30,6 +30,7 @@ the library
 - [X] Play different pitched beeps
 - [X] Create library for beeping
 - [X] Design test program which uses the library
+- [X] Learn goroutines
 - [ ] Create a Player client
 - [ ] Create a Conductor server
 - [ ] Play Row, Row, Row Your Boat in a round
