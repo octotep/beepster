@@ -21,4 +21,6 @@ speaker.
 - [X] Create library for beeping
 - [ ] Create a Player client
 - [ ] Create a Conductor server
+- [ ] Play Row, Row, Row Your Boat in a round
+	- Two clients, one server
 - [ ] Play midi?!
