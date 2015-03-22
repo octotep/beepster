@@ -50,8 +50,10 @@ func main() {
 func parseStream(dec *gob.Decoder, output chan *beepster.Note, wg sync.WaitGroup) {
 	defer wg.Done()
 	note := &beepster.Note{}
+	// TODO: fix this. Does not advance the note stream at all
 	for err := dec.Decode(note); err == nil; {
 		output <- note
+		note = &beepster.Note{}
 	}
 	close(output)
 }
