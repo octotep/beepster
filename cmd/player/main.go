@@ -39,15 +39,16 @@ func main() {
 	decoder := gob.NewDecoder(connection)
 
 	wg.Add(1)
-	go parseStream(decoder, track)
+	go parseStream(decoder, track, wg)
 	wg.Add(1)
-	go playStream(speaker, track)
+	go playStream(speaker, track, wg)
 
 	wg.Wait()
 	speaker.Close()
 }
 
-func parseStream(dec *gob.Decoder, output chan *beepster.Note) {
+func parseStream(dec *gob.Decoder, output chan *beepster.Note, wg sync.WaitGroup) {
+	defer wg.Done()
 	note := &beepster.Note{}
 	for err := dec.Decode(note); err == nil; {
 		output <- note
@@ -55,7 +56,8 @@ func parseStream(dec *gob.Decoder, output chan *beepster.Note) {
 	close(output)
 }
 
-func playStream(spkr *beepster.Speaker, output chan *beepster.Note) {
+func playStream(spkr *beepster.Speaker, output chan *beepster.Note, wg sync.WaitGroup) {
+	defer wg.Done()
 	for note := range output {
 		spkr.PlayNote(note)
 	}
