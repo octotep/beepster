@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/gob"
+	"flag"
 	"fmt"
 	"github.com/octotep/beepster"
 	"net"
@@ -9,11 +10,12 @@ import (
 	"sync"
 )
 
-const (
-	PORT = "8888"
-)
-
 func main() {
+	// Parse command line flags
+	port := flag.String("p", "8888", "Specifies the port")
+
+	flag.Parse()
+
 	var wg sync.WaitGroup
 
 	track := make(chan *beepster.Note, 14)
@@ -70,9 +72,9 @@ func main() {
 		close(track)
 	}()
 
-	listener, err := net.Listen("tcp", ":"+PORT)
+	listener, err := net.Listen("tcp", ":"+(*port))
 	if err != nil {
-		fmt.Print("Error listening on port " + PORT)
+		fmt.Print("Error listening on port " + *port)
 		os.Exit(1)
 	}
 

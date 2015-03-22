@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/gob"
+	"flag"
 	"fmt"
 	"github.com/octotep/beepster"
 	"net"
@@ -9,12 +10,13 @@ import (
 	"sync"
 )
 
-const (
-	HOST = "localhost"
-	PORT = "8888"
-)
-
 func main() {
+	// Parse command line flags
+	host := flag.String("h", "localhost", "Specifies the hostname")
+	port := flag.String("p", "8888", "Specifies the port")
+
+	flag.Parse()
+
 	// Create a channel to send notes to the player goroutine
 	track := make(chan *beepster.Note, 10)
 	defer close(track)
@@ -26,14 +28,14 @@ func main() {
 	var wg sync.WaitGroup
 
 	// Open a connection to the server
-	connection, err := net.Dial("tcp", HOST+":"+PORT)
+	connection, err := net.Dial("tcp", (*host)+":"+(*port))
 	if err != nil {
 		fmt.Println("Error connecting: ", err.Error())
 		os.Exit(1)
 	}
 	// Close the connection when we reach the end of main
 	defer connection.Close()
-	fmt.Println("Connected to: " + HOST + ":" + PORT)
+	fmt.Println("Connected to: " + *host + ":" + *port)
 
 	// Create a new decoder for receiving notes
 	decoder := gob.NewDecoder(connection)
