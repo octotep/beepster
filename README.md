@@ -12,7 +12,7 @@ speaker.
 
 In the `cmd` directory, there are three programs.
 
-1. **beep** - this is a simple beeper program to make sure I know how to use
+1. **gobeep** - this is a simple beeper program to make sure I know how to use
 the library
 2. **conductor** - responsible for gathering players and feeding them notes
 3. **player** - receive note commands from the conductor and plays them
