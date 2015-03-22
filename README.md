@@ -23,6 +23,7 @@ the library
 - [Programming the internal speaker](http://www.tldp.org/LDP/lpg/node83.html)
 - [Tour of golang](https://tour.golang.org/)
 - [Simple chat server](http://www.badgerr.co.uk/2011/06/20/golang-away-tcp-chat-server/)
+- [Read gob data from a network connection](http://stackoverflow.com/a/11202252)
 
 # TODO
 - [X] Learn go
