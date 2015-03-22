@@ -1,4 +1,4 @@
-package main
+package beepster
 
 import (
 	"os"
@@ -8,17 +8,13 @@ import (
 
 const (
 	KIOCSOUND       = 0x4B2F
-	EVIOCGSND       = 0x4B2F
 	CLOCK_TICK_RATE = 1193180
 )
 
 type Note struct {
-	// Frequency (Hz)
-	freq float32
-	// Length of note (ms)
-	length uint32
-	// Delay after note (ms)
-	delay uint32
+	Freq float32   // Frequency (Hz)
+	Length uint32  // Length of note (ms)
+	Delay uint32   // Delay after note (ms)
 }
 
 type Speaker struct {
@@ -27,7 +23,7 @@ type Speaker struct {
 }
 
 // Create a new speaker object ready for use
-func speaker_init() *Speaker {
+func Open() *Speaker {
 	// Open speaker
 	fd, err := os.Create("/dev/tty0")
 	if err != nil {
@@ -40,7 +36,7 @@ func speaker_init() *Speaker {
 
 // Makes the speaker play a certain tone.
 // To stop it, call it with a frequency of 0
-func (spkr *Speaker) beep(freq float32) {
+func (spkr *Speaker) Beep(freq float32) {
 	if freq != 0 {
 		// Beep at the given pitch
 		_, _, _ = syscall.Syscall(syscall.SYS_IOCTL, spkr.file.Fd(), uintptr(KIOCSOUND), uintptr(CLOCK_TICK_RATE/freq))
@@ -51,33 +47,20 @@ func (spkr *Speaker) beep(freq float32) {
 }
 
 // Plays an entire Note object
-func (spkr *Speaker) play_note(note *Note) {
-	spkr.beep(note.freq)
-	time.Sleep(time.Duration(note.length) * time.Millisecond)
-	spkr.beep(0)
-	time.Sleep(time.Duration(note.delay) * time.Millisecond)
+func (spkr *Speaker) PlayNote(note *Note) {
+	spkr.Beep(note.Freq)
+	time.Sleep(time.Duration(note.Length) * time.Millisecond)
+	spkr.Beep(0)
+	time.Sleep(time.Duration(note.Delay) * time.Millisecond)
 }
 
 // Properly shutdowns the speaker
-func (spkr *Speaker) shutdown() {
+func (spkr *Speaker) Close() {
 	// Stop all beeping
-	spkr.beep(0)
+	spkr.Beep(0)
 	// Close the speaker
 	err := spkr.file.Close()
 	if err != nil {
 		panic(err)
 	}
-}
-
-func main() {
-	// Open speaker
-	speaker := speaker_init()
-	// Close speaker when done
-	defer speaker.shutdown()
-
-	note := Note{440.0, 1000, 5}
-	note2 := Note{880.0, 1000, 5}
-
-	speaker.play_note(&note)
-	speaker.play_note(&note2)
 }

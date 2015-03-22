@@ -8,19 +8,30 @@ speakers. My first (and hopefully only attempt) at this will be in golang.
 This will only work on linux. It uses kernel level calls to get at the 
 speaker.
 
+## Programs
+
+In the `cmd` directory, there are three programs.
+
+1. **beep** - this is a simple beeper program to make sure I know how to use
+the library
+2. **conductor** - responsible for gathering players and feeding them notes
+3. **player** - receive note commands from the conductor and plays them
+
 # Resources
 - [Original beep program](https://github.com/johnath/beep/blob/master/beep.c)
 - [ioctl implementation in go](https://github.com/edsrzf/fineline/blob/master/ioctl.go)
 - [Programming the internal speaker](http://www.tldp.org/LDP/lpg/node83.html)
-- [https://tour.golang.org/](Tour of golang)
+- [Tour of golang](https://tour.golang.org/)
+- [Simple chat server](http://www.badgerr.co.uk/2011/06/20/golang-away-tcp-chat-server/)
 
 # TODO
 - [X] Learn go
 - [X] Play a beep with go
 - [X] Play different pitched beeps
 - [X] Create library for beeping
+- [X] Design test program which uses the library
 - [ ] Create a Player client
 - [ ] Create a Conductor server
 - [ ] Play Row, Row, Row Your Boat in a round
-	- Two clients, one server
+	- Two clients synced with one server
 - [ ] Play midi?!
