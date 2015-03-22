@@ -49,11 +49,15 @@ func main() {
 
 func parseStream(dec *gob.Decoder, output chan *beepster.Note, wg sync.WaitGroup) {
 	defer wg.Done()
-	note := &beepster.Note{}
 	// TODO: fix this. Does not advance the note stream at all
-	for err := dec.Decode(note); err == nil; {
+	for {
+		note := &beepster.Note{}
+		err := dec.Decode(note)
+		if err != nil {
+			break
+		}
+		fmt.Println("adding note")
 		output <- note
-		note = &beepster.Note{}
 	}
 	close(output)
 }
@@ -61,6 +65,7 @@ func parseStream(dec *gob.Decoder, output chan *beepster.Note, wg sync.WaitGroup
 func playStream(spkr *beepster.Speaker, output chan *beepster.Note, wg sync.WaitGroup) {
 	defer wg.Done()
 	for note := range output {
+		fmt.Println("playing note")
 		spkr.PlayNote(note)
 	}
 }

@@ -32,8 +32,10 @@ the library
 - [X] Create library for beeping
 - [X] Design test program which uses the library
 - [X] Learn goroutines
-- [ ] Create a Player client
+- [X] Create a Player client
 - [ ] Create a Conductor server
+	- [X] Simple test to play across network connection
+	- [ ] Sync multiple computers to play together
 - [ ] Play Row, Row, Row Your Boat in a round
 	- Two clients synced with one server
 - [ ] Play midi?!

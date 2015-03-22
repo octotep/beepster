@@ -20,8 +20,8 @@ func main() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		track <- &beepster.Note{261.0, 500, 500}
-		track <- &beepster.Note{461.0, 500, 5}
+		track <- &beepster.Note{261.0, 500, 5}
+		track <- &beepster.Note{261.0, 500, 5}
 		track <- &beepster.Note{392.0, 500, 5}
 		track <- &beepster.Note{392.0, 500, 5}
 		track <- &beepster.Note{440.0, 500, 5}
