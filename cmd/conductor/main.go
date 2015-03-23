@@ -199,39 +199,51 @@ func main() {
 		close(mysong.track[1])
 	}()
 
+	// Start listening for client connections
 	listener, err := net.Listen("tcp", ":"+(*port))
 	if err != nil {
 		fmt.Print("Error listening on port " + *port)
 		os.Exit(1)
 	}
 
+	// Only accept mysong.numTracks clients, one for each part
 	for i := uint8(0); i < mysong.numTracks; i++ {
 		conn, err := listener.Accept()
 		if err != nil {
 			fmt.Print("Error accepting connection")
 			os.Exit(1)
 		}
-		wg.Add(1)
 		fmt.Println("New incomming connection")
+
+		wg.Add(1)
 		go handleConnection(conn, mysong.track[i], &wg, &conductor)
 	}
+
 	fmt.Println("All parts filled: commencing playing")
-	conductor.begin = true
+
+	// Tell all goroutines to start sending data to their prospective clients
 	conductor.m.Lock()
+	conductor.begin = true
 	conductor.c.Broadcast()
 	conductor.m.Unlock()
 
+	// Wait until all goroutines are finished before halting execution
 	wg.Wait()
 }
 
+// Send data from a given track accros a given connection by encoding it with gob
 func handleConnection(conn net.Conn, track chan *beepster.Note, wg *sync.WaitGroup, state *State) {
 	defer wg.Done()
 	enc := gob.NewEncoder(conn)
+
+	// Wait until all the connections are ready
 	state.m.Lock()
 	for !state.begin {
 		state.c.Wait()
 	}
 	state.m.Unlock()
+
+	// Send notes over the wire
 	for note := range track {
 		enc.Encode(note)
 	}
