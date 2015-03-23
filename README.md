@@ -39,7 +39,7 @@ the library
 - [X] Play Row, Row, Row Your Boat in a round
 	- Two clients synced with one server
 - [ ] Polish server and client
-	- [ ] Handle when the songs over intelligently
-	- [ ] Move song definition out of main, too much clutter
-	- [ ] Remove debug output
+	- [X] Handle when the songs over intelligently
+	- [ ] Move song definition and creation out of main, too much clutter
+	- [X] Remove debug output
 - [ ] Play midi?!

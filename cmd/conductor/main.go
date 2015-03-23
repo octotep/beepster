@@ -25,6 +25,7 @@ type State struct {
 func main() {
 	// Parse command line flags
 	port := flag.String("p", "8888", "Specifies the port")
+	reps := flag.Int("r", 1, "Specifies the number of repetitions")
 
 	flag.Parse()
 
@@ -47,68 +48,71 @@ func main() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		mysong.track[0] <- &beepster.Note{261.0, 500, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 500, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 500, 5}
+		for i := 0; i < *reps; i++ {
+			mysong.track[0] <- &beepster.Note{261.0, 500, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 500, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 500, 5}
 
-		mysong.track[0] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{349.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{392.0, 1000, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{349.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 1000, 5}
 
-		mysong.track[0] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 166, 5}
 
-		mysong.track[0] <- &beepster.Note{392.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{349.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 1000, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{349.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 1000, 5}
 
-		// second time
-		mysong.track[0] <- &beepster.Note{261.0, 500, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 500, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 500, 5}
+			// second time
+			mysong.track[0] <- &beepster.Note{261.0, 500, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 500, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 500, 5}
 
-		mysong.track[0] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{349.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{392.0, 1000, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{349.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 1000, 5}
 
-		mysong.track[0] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 166, 5}
 
-		mysong.track[0] <- &beepster.Note{392.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{349.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[0] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[0] <- &beepster.Note{261.0, 1000, 5}
+			mysong.track[0] <- &beepster.Note{392.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{349.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[0] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[0] <- &beepster.Note{261.0, 1000, 5}
+		}
+
 		close(mysong.track[0])
 	}()
 
@@ -122,68 +126,70 @@ func main() {
 		mysong.track[1] <- &beepster.Note{0, 166, 5}
 		mysong.track[1] <- &beepster.Note{0, 500, 5}
 
-		mysong.track[1] <- &beepster.Note{261.0, 500, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 500, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 500, 5}
+		for i := 0; i < *reps; i++ {
+			mysong.track[1] <- &beepster.Note{261.0, 500, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 500, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 500, 5}
 
-		mysong.track[1] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{349.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{392.0, 1000, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{349.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 1000, 5}
 
-		mysong.track[1] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 166, 5}
 
-		mysong.track[1] <- &beepster.Note{392.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{349.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 1000, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{349.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 1000, 5}
 
-		// Second time
-		mysong.track[1] <- &beepster.Note{261.0, 500, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 500, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 500, 5}
+			// Second time
+			mysong.track[1] <- &beepster.Note{261.0, 500, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 500, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 500, 5}
 
-		mysong.track[1] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{349.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{392.0, 1000, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{349.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 1000, 5}
 
-		mysong.track[1] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{523.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{392.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{523.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 166, 5}
 
-		mysong.track[1] <- &beepster.Note{392.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{349.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{329.0, 333, 5}
-		mysong.track[1] <- &beepster.Note{293.0, 166, 5}
-		mysong.track[1] <- &beepster.Note{261.0, 1000, 5}
+			mysong.track[1] <- &beepster.Note{392.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{349.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{329.0, 333, 5}
+			mysong.track[1] <- &beepster.Note{293.0, 166, 5}
+			mysong.track[1] <- &beepster.Note{261.0, 1000, 5}
+		}
 
 		mysong.track[1] <- &beepster.Note{392.0, 333, 5}
 		mysong.track[1] <- &beepster.Note{349.0, 166, 5}
@@ -207,19 +213,18 @@ func main() {
 		}
 		wg.Add(1)
 		fmt.Println("New incomming connection")
-		go handleConnection(conn, mysong.track[i], wg, &conductor)
+		go handleConnection(conn, mysong.track[i], &wg, &conductor)
 	}
 	fmt.Println("All parts filled: commencing playing")
 	conductor.begin = true
 	conductor.m.Lock()
-	fmt.Println("Main locking it down")
 	conductor.c.Broadcast()
 	conductor.m.Unlock()
 
 	wg.Wait()
 }
 
-func handleConnection(conn net.Conn, track chan *beepster.Note, wg sync.WaitGroup, state *State) {
+func handleConnection(conn net.Conn, track chan *beepster.Note, wg *sync.WaitGroup, state *State) {
 	defer wg.Done()
 	enc := gob.NewEncoder(conn)
 	state.m.Lock()
@@ -228,7 +233,6 @@ func handleConnection(conn net.Conn, track chan *beepster.Note, wg sync.WaitGrou
 	}
 	state.m.Unlock()
 	for note := range track {
-		fmt.Println("Encoded another note")
 		enc.Encode(note)
 	}
 	conn.Close()

@@ -19,7 +19,6 @@ func main() {
 
 	// Create a channel to send notes to the player goroutine
 	track := make(chan *beepster.Note, 10)
-	defer close(track)
 
 	speaker := beepster.Open()
 	defer speaker.Close()
@@ -41,33 +40,32 @@ func main() {
 	decoder := gob.NewDecoder(connection)
 
 	wg.Add(1)
-	go parseStream(decoder, track, wg)
+	go parseStream(decoder, &track, &wg)
 	wg.Add(1)
-	go playStream(speaker, track, wg)
+	go playStream(speaker, &track, &wg)
 
+	fmt.Println("Now we wait")
 	wg.Wait()
-	speaker.Close()
 }
 
-func parseStream(dec *gob.Decoder, output chan *beepster.Note, wg sync.WaitGroup) {
+func parseStream(dec *gob.Decoder, output *chan *beepster.Note, wg *sync.WaitGroup) {
 	defer wg.Done()
-	// TODO: fix this. Does not advance the note stream at all
 	for {
 		note := &beepster.Note{}
 		err := dec.Decode(note)
 		if err != nil {
 			break
 		}
-		fmt.Println("adding note")
-		output <- note
+		*output <- note
 	}
-	close(output)
+	fmt.Println("Done adding notes")
+	close(*output)
 }
 
-func playStream(spkr *beepster.Speaker, output chan *beepster.Note, wg sync.WaitGroup) {
+func playStream(spkr *beepster.Speaker, output *chan *beepster.Note, wg *sync.WaitGroup) {
 	defer wg.Done()
-	for note := range output {
-		fmt.Println("playing note")
+	for note := range *output {
 		spkr.PlayNote(note)
 	}
+	fmt.Println("Done playing notes")
 }
