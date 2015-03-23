@@ -24,6 +24,7 @@ the library
 - [Tour of golang](https://tour.golang.org/)
 - [Simple chat server](http://www.badgerr.co.uk/2011/06/20/golang-away-tcp-chat-server/)
 - [Read gob data from a network connection](http://stackoverflow.com/a/11202252)
+- [First order functions in golang](https://golang.org/doc/codewalk/functions/)
 
 # TODO
 - [X] Learn go
@@ -38,8 +39,8 @@ the library
 	- [X] Sync multiple computers to play together
 - [X] Play Row, Row, Row Your Boat in a round
 	- Two clients synced with one server
-- [ ] Polish server and client
+- [X] Polish server and client
 	- [X] Handle when the songs over intelligently
-	- [ ] Move song definition and creation out of main, too much clutter
+	- [X] Move song definition and creation out of main, too much clutter
 	- [X] Remove debug output
-- [ ] Play midi?!
+- [ ] Play ~~midi~~ MusicXML?!

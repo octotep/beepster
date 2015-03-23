@@ -46,6 +46,7 @@ func main() {
 
 	fmt.Println("Now we wait")
 	wg.Wait()
+	fmt.Println("All done!")
 }
 
 func parseStream(dec *gob.Decoder, output *chan *beepster.Note, wg *sync.WaitGroup) {
@@ -58,7 +59,7 @@ func parseStream(dec *gob.Decoder, output *chan *beepster.Note, wg *sync.WaitGro
 		}
 		*output <- note
 	}
-	fmt.Println("Done adding notes")
+	fmt.Println("Done receiving notes")
 	close(*output)
 }
 
