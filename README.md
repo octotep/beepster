@@ -33,9 +33,13 @@ the library
 - [X] Design test program which uses the library
 - [X] Learn goroutines
 - [X] Create a Player client
-- [ ] Create a Conductor server
+- [X] Create a Conductor server
 	- [X] Simple test to play across network connection
-	- [ ] Sync multiple computers to play together
-- [ ] Play Row, Row, Row Your Boat in a round
+	- [X] Sync multiple computers to play together
+- [X] Play Row, Row, Row Your Boat in a round
 	- Two clients synced with one server
+- [ ] Polish server and client
+	- [ ] Handle when the songs over intelligently
+	- [ ] Move song definition out of main, too much clutter
+	- [ ] Remove debug output
 - [ ] Play midi?!
