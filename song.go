@@ -1,7 +1,6 @@
 package beepster
 
 import (
-	"fmt"
 	"github.com/octotep/go-mxl"
 	"math"
 )
@@ -41,17 +40,6 @@ func (song *Song) CreateFiller(trackId uint8, cleanup func(), tracks ...*[]Note)
 }
 
 func CreateSongFromXML(mxlDoc mxl.MXLDoc, numRepetitions int) *Song {
-	// xmlFile, err := os.Open("/home/octotep/tree.xml")
-	// if err != nil {
-	// 	fmt.Println("Error opening file:", err)
-	// }
-	// defer xmlFile.Close()
-
-	// XMLdata, _ := ioutil.ReadAll(xmlFile)
-
-	// var doc mxl.MXLDoc
-	// xml.Unmarshal(XMLdata, &doc)
-
 	mysong := new(Song)
 	mysong.NumTracks = uint8(len(mxlDoc.Parts))
 	mysong.Reps = numRepetitions
@@ -60,15 +48,6 @@ func CreateSongFromXML(mxlDoc mxl.MXLDoc, numRepetitions int) *Song {
 		mysong.Track[i] = make(chan Note, 14)
 	}
 	return mysong
-
-	// for i, measure := range doc.Parts[1].Measures {
-	// 	// fmt.Printf("\t%s\n", part)
-	// 	fmt.Println("Measure:", i)
-	// 	fmt.Println("Divisions:", measure.Atters.Divisions)
-	// 	for j, note := range measure.Notes {
-	// 		fmt.Println(j, note.Pitch, note.Duration)
-	// 	}
-	// }
 }
 
 func (song *Song) CreateFillerFromXml(trackId uint8, bpm uint, cleanup func(), track mxl.Part) func() {
@@ -90,14 +69,17 @@ func (song *Song) CreateFillerFromXml(trackId uint8, bpm uint, cleanup func(), t
 						// It's a rest
 						freq = 0.0
 					} else {
+						// Calc the correct pitch from the frequency
 						freq = PitchToFreq(note.Pitch)
 					}
-					lengthOfQuarter := 1.0 / float32(bpm)
+					// How long one quarter note is in seconds
+					lengthOfQuarter := 60.0 / float32(bpm)
+					// The length of the current note in seconds
 					totalTime := float32(note.Duration) / float32(currentDiv) * lengthOfQuarter
-					// Conver totalTime to ms
+					// Delay before the next note in ms
 					delay := 5
+					// Convert totalTime to ms and subtract delay at the end of the note
 					length := int(totalTime*1000) - delay
-					// fmt.Println("totalTIme:", totalTime)
 					song.Track[trackId] <- Note{freq, uint32(length), uint32(delay)}
 				}
 			}
@@ -130,6 +112,5 @@ func PitchToFreq(pitch mxl.Pitch) float32 {
 	var freq float32
 	// 2^(n/12) * 440
 	freq = float32(math.Pow(2, float64(float64(relativeHalfSteps)/12.0))) * 440.0
-	fmt.Println("Relative, freq, pitch", relativeHalfSteps, freq, pitch)
 	return freq
 }

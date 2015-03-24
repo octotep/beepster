@@ -44,3 +44,5 @@ the library
 	- [X] Move song definition and creation out of main, too much clutter
 	- [X] Remove debug output
 - [ ] Play ~~midi~~ MusicXML?!
+	- [X] Can create two tracks for two computers to play in sync
+	- [ ] Test for robustness
