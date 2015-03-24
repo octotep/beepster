@@ -2,9 +2,12 @@ package main
 
 import (
 	"encoding/gob"
+	"encoding/xml"
 	"flag"
 	"fmt"
 	"github.com/octotep/beepster"
+	"github.com/octotep/go-mxl"
+	"io/ioutil"
 	"net"
 	"os"
 	"sync"
@@ -21,6 +24,8 @@ func main() {
 	// Parse command line flags
 	port := flag.String("p", "8888", "Specifies the port")
 	reps := flag.Int("r", 1, "Specifies the number of repetitions")
+	tempo := flag.Uint("t", 120, "Specifies the number of repetitions")
+	file := flag.String("f", "", "Specifies the number of repetitions")
 
 	flag.Parse()
 
@@ -29,15 +34,26 @@ func main() {
 	conductor.c = sync.NewCond(&conductor.m)
 	conductor.begin = false
 
-	mysong := beepster.CreateSong(2, *reps)
+	xmlFile, err := os.Open(*file)
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+	}
+	defer xmlFile.Close()
+
+	XMLdata, _ := ioutil.ReadAll(xmlFile)
+
+	var doc mxl.MXLDoc
+	xml.Unmarshal(XMLdata, &doc)
+
+	mysong := beepster.CreateSongFromXML(doc, *reps)
 
 	var wg sync.WaitGroup
 
 	// Create goroutines to compose all the parts to create a track
 	wg.Add(1)
-	go mysong.CreateTrackFiller(0, wg.Done, &melody, &rest, &rest)()
+	go mysong.CreateFillerFromXml(0, *tempo, wg.Done, doc.Parts[0])()
 	wg.Add(1)
-	go mysong.CreateTrackFiller(1, wg.Done, &rest, &melody, &tag)()
+	go mysong.CreateFillerFromXml(1, *tempo, wg.Done, doc.Parts[1])()
 
 	// Start listening for client connections
 	listener, err := net.Listen("tcp", ":"+(*port))
