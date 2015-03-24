@@ -34,6 +34,7 @@ func main() {
 	conductor.c = sync.NewCond(&conductor.m)
 	conductor.begin = false
 
+	fmt.Println(*file)
 	xmlFile, err := os.Open(*file)
 	if err != nil {
 		fmt.Println("Error opening file:", err)
@@ -44,11 +45,13 @@ func main() {
 
 	var doc mxl.MXLDoc
 	xml.Unmarshal(XMLdata, &doc)
+	fmt.Println(doc)
 
 	mysong := beepster.CreateSongFromXML(doc, *reps)
 
 	var wg sync.WaitGroup
 
+	fmt.Println("Num of tracks:", len(doc.Parts))
 	// Create goroutines to compose all the parts to create a track
 	wg.Add(1)
 	go mysong.CreateFillerFromXml(0, *tempo, wg.Done, doc.Parts[0])()

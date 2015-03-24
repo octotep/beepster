@@ -85,13 +85,19 @@ func (song *Song) CreateFillerFromXml(trackId uint8, bpm uint, cleanup func(), t
 
 				// Loop through all notes in one of the arrays
 				for _, note := range measure.Notes {
-					freq := PitchToFreq(note.Pitch)
+					var freq float32
+					if note.Pitch.Step == "" {
+						// It's a rest
+						freq = 0.0
+					} else {
+						freq = PitchToFreq(note.Pitch)
+					}
 					lengthOfQuarter := 1.0 / float32(bpm)
 					totalTime := float32(note.Duration) / float32(currentDiv) * lengthOfQuarter
 					// Conver totalTime to ms
 					delay := 5
 					length := int(totalTime*1000) - delay
-					fmt.Println("totalTIme:", totalTime)
+					// fmt.Println("totalTIme:", totalTime)
 					song.Track[trackId] <- Note{freq, uint32(length), uint32(delay)}
 				}
 			}
@@ -118,9 +124,12 @@ func PitchToFreq(pitch mxl.Pitch) float32 {
 		letter = 11
 	}
 	absoluteHalfSteps := 12*(pitch.Octave-1) + letter + int(pitch.Accidental)
+	a440 := 45
+	relativeHalfSteps := absoluteHalfSteps - a440
 
 	var freq float32
 	// 2^(n/12) * 440
-	freq = float32(math.Pow(2, float64(absoluteHalfSteps/12.0))) * 440
+	freq = float32(math.Pow(2, float64(float64(relativeHalfSteps)/12.0))) * 440.0
+	fmt.Println("Relative, freq, pitch", relativeHalfSteps, freq, pitch)
 	return freq
 }
