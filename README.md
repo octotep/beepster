@@ -45,4 +45,14 @@ the library
 	- [X] Remove debug output
 - [ ] Play ~~midi~~ MusicXML?!
 	- [X] Can create two tracks for two computers to play in sync
+	- [X] Handle chords without going out of sync
+	- [ ] Handle ties correctly (no note delay)
+	- [ ] Handle articulaton (change delay)
+	- [ ] Handle transposition
 	- [ ] Test for robustness
+- [ ] General Polish
+	- [ ] Error handling in library (pass to actual program)
+	- [ ] Document everything, add program usage examples, also limitiations
+	- [ ] Let a conductor take less computers than there are parts (ignore the rest)
+	- [ ] Handle compressed mxl documents, because XML is very verbose
+	- [ ] Make gobeep a better alternative to the beep program, handle all original

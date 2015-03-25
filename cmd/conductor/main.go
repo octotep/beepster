@@ -53,10 +53,10 @@ func main() {
 
 	fmt.Println("Num of tracks:", len(doc.Parts))
 	// Create goroutines to compose all the parts to create a track
-	wg.Add(1)
-	go mysong.CreateFillerFromXml(0, *tempo, wg.Done, doc.Parts[0])()
-	wg.Add(1)
-	go mysong.CreateFillerFromXml(1, *tempo, wg.Done, doc.Parts[1])()
+	for i := 0; i < len(doc.Parts); i++ {
+		wg.Add(1)
+		go mysong.CreateFillerFromXml(uint8(i), *tempo, wg.Done, doc.Parts[i])()
+	}
 
 	// Start listening for client connections
 	listener, err := net.Listen("tcp", ":"+(*port))

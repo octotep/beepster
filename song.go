@@ -55,7 +55,7 @@ func (song *Song) CreateFillerFromXml(trackId uint8, bpm uint, cleanup func(), t
 		defer cleanup()
 		for i := 0; i < song.Reps; i++ {
 			// Loop through all arrays given
-			currentDiv := 0
+			currentDiv := 1
 			for _, measure := range track.Measures {
 				// Check for new division
 				if measure.Atters.Divisions != 0 {
@@ -64,23 +64,26 @@ func (song *Song) CreateFillerFromXml(trackId uint8, bpm uint, cleanup func(), t
 
 				// Loop through all notes in one of the arrays
 				for _, note := range measure.Notes {
-					var freq float32
-					if note.Pitch.Step == "" {
-						// It's a rest
-						freq = 0.0
-					} else {
-						// Calc the correct pitch from the frequency
-						freq = PitchToFreq(note.Pitch)
+					// Only process the note if it is not part of a chord
+					if note.Chord.Local == "" {
+						var freq float32
+						if note.Pitch.Step == "" {
+							// It's a rest
+							freq = 0.0
+						} else {
+							// Calc the correct pitch from the frequency
+							freq = PitchToFreq(note.Pitch)
+						}
+						// How long one quarter note is in seconds
+						lengthOfQuarter := 60.0 / float32(bpm)
+						// The length of the current note in seconds
+						totalTime := float32(note.Duration) / float32(currentDiv) * lengthOfQuarter
+						// Delay before the next note in ms
+						delay := 5
+						// Convert totalTime to ms and subtract delay at the end of the note
+						length := int(totalTime*1000) - delay
+						song.Track[trackId] <- Note{freq, uint32(length), uint32(delay)}
 					}
-					// How long one quarter note is in seconds
-					lengthOfQuarter := 60.0 / float32(bpm)
-					// The length of the current note in seconds
-					totalTime := float32(note.Duration) / float32(currentDiv) * lengthOfQuarter
-					// Delay before the next note in ms
-					delay := 5
-					// Convert totalTime to ms and subtract delay at the end of the note
-					length := int(totalTime*1000) - delay
-					song.Track[trackId] <- Note{freq, uint32(length), uint32(delay)}
 				}
 			}
 		}
